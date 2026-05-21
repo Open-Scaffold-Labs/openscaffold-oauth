@@ -66,22 +66,24 @@ async function main() {
   app.post('/interaction/:uid/confirm', async (req, res, next) => {
     try {
       const details = await provider.interactionDetails(req, res);
-      const { prompt, session, params } = details;
+      const { session, params, prompt } = details;
       const grant = details.grantId
         ? await provider.Grant.find(details.grantId)
         : new provider.Grant({ accountId: session.accountId, clientId: params.client_id });
 
+      // Without resource indicators (deferred in v0.1), all requested scopes
+      // — both OIDC-standard and Open Scaffold vertical scopes — are added
+      // via addOIDCScope. They land on the access token unchanged.
       const requestedScopes = (params.scope || '').split(/\s+/).filter(Boolean);
-      grant.addOIDCScope(requestedScopes.filter((s) => ['openid', 'profile', 'email', 'offline_access'].includes(s)).join(' '));
-      // Resource server scopes
-      const rsScopes = requestedScopes.filter((s) => s.startsWith('openlawfirm:'));
-      if (rsScopes.length) {
-        grant.addResourceScope('openlawfirm', rsScopes.join(' '));
+      if (requestedScopes.length) {
+        grant.addOIDCScope(requestedScopes.join(' '));
+      }
+      // Honor any missingOIDCClaims that the consent prompt is asking us to acknowledge.
+      if (prompt.details?.missingOIDCClaims?.length) {
+        grant.addOIDCClaims(prompt.details.missingOIDCClaims);
       }
       const grantId = await grant.save();
-      const result = {
-        consent: { grantId },
-      };
+      const result = { consent: { grantId } };
       await provider.interactionFinished(req, res, result, { mergeWithLastSubmission: true });
     } catch (err) {
       next(err);
