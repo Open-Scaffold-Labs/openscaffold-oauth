@@ -1,0 +1,31 @@
+{
+  "name": "openscaffold-oauth",
+  "version": "0.1.0",
+  "description": "Shared OAuth 2.0 + OpenID Connect authorization server for the Open Scaffold Labs ecosystem.",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "oauth",
+    "oidc",
+    "openid-connect",
+    "pkce",
+    "open-scaffold-labs"
+  ],
+  "author": "Open Scaffold Labs, LLC",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "ejs": "^5.0.2",
+    "express": "^4.19.0",
+    "oidc-provider": "^8.5.1",
+    "pg": "^8.13.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

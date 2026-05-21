@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign in · Open Scaffold</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f7fa; margin: 0; padding: 48px 16px; }
+    .card { max-width: 380px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { margin: 0 0 8px; font-size: 20px; color: #1B3A5C; }
+    .sub { margin: 0 0 24px; color: #5a6d80; font-size: 14px; }
+    label { display: block; font-size: 13px; color: #1B3A5C; margin-bottom: 4px; }
+    input { width: 100%; padding: 10px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 15px; box-sizing: border-box; margin-bottom: 16px; }
+    button { width: 100%; padding: 10px; background: #4F46E5; color: #fff; border: 0; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #4338CA; }
+    .err { background: #fdecea; color: #b3261e; padding: 10px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
+    .branding { text-align: center; color: #5a6d80; font-size: 12px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Sign in to Open Scaffold</h1>
+    <p class="sub">Continue to <strong><%= params.client_id %></strong></p>
+    <% if (error) { %>
+      <div class="err"><%= error %></div>
+    <% } %>
+    <form method="POST" action="/interaction/<%= uid %>/login">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required autofocus>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+      <button type="submit">Sign in</button>
+    </form>
+    <p class="branding">Open Scaffold Labs · openscaffoldlabs.com</p>
+  </div>
+</body>
+</html>

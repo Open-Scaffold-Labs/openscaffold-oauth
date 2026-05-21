@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authorize · Open Scaffold</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f7fa; margin: 0; padding: 48px 16px; }
+    .card { max-width: 480px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { margin: 0 0 8px; font-size: 20px; color: #1B3A5C; }
+    .sub { margin: 0 0 24px; color: #5a6d80; font-size: 14px; }
+    .scope-list { background: #f5f7fa; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+    .scope { font-size: 13px; padding: 6px 0; color: #1B3A5C; }
+    .scope code { background: #ECECFB; color: #4F46E5; padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; }
+    button { padding: 10px 20px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; border: 0; }
+    .primary { background: #4F46E5; color: #fff; margin-right: 8px; }
+    .primary:hover { background: #4338CA; }
+    .secondary { background: #fff; color: #5a6d80; border: 1px solid #d0d7de; }
+    .secondary:hover { background: #f5f7fa; }
+    .actions { display: flex; gap: 8px; }
+    .actions form { flex: 1; }
+    .actions button { width: 100%; }
+    .branding { text-align: center; color: #5a6d80; font-size: 12px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Authorize <%= clientName %></h1>
+    <p class="sub">This connector is requesting access to your Open Scaffold account.</p>
+    <div class="scope-list">
+      <div class="scope" style="margin-bottom: 8px; font-weight: 600;">Requested permissions:</div>
+      <% scopes.forEach(function(s) { %>
+        <div class="scope">• <code><%= s %></code></div>
+      <% }); %>
+    </div>
+    <div class="actions">
+      <form method="POST" action="/interaction/<%= uid %>/confirm">
+        <button class="primary" type="submit">Authorize</button>
+      </form>
+      <form method="POST" action="/interaction/<%= uid %>/abort">
+        <button class="secondary" type="submit">Cancel</button>
+      </form>
+    </div>
+    <p class="branding">Open Scaffold Labs · openscaffoldlabs.com</p>
+  </div>
+</body>
+</html>
